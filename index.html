@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이예란 | 마케팅 포트폴리오</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #e5e5e5;
+    --text-sub: #888;
+    --accent: #6366f1;
+    --accent-soft: rgba(99,102,241,0.15);
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* Edit Mode */
+  .edit-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+    transition: all 0.2s;
+  }
+  .edit-toggle:hover { transform: translateY(-2px); }
+  .edit-toggle.active { background: var(--green); }
+
+  body.editing [contenteditable="true"] {
+    outline: 1px dashed var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 16px 0;
+  }
+  nav .nav-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .logo { font-weight: 700; font-size: 18px; }
+  nav .nav-links a {
+    color: var(--text-sub);
+    text-decoration: none;
+    margin-left: 28px;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--text); }
+
+  /* Sections */
+  section { max-width: 1000px; margin: 0 auto; padding: 100px 24px; }
+
+  /* Hero */
+  .hero {
+    padding-top: 160px;
+    padding-bottom: 80px;
+  }
+  .hero .label {
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+  .hero .subtitle {
+    font-size: 20px;
+    color: var(--text-sub);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .hero .stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero .stat { text-align: left; }
+  .hero .stat .number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hero .stat .desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-top: 4px;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .about-text { font-size: 16px; color: var(--text-sub); line-height: 1.9; }
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .tech-tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  /* Section Title */
+  .section-title {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    color: var(--text-sub);
+    font-size: 16px;
+    margin-bottom: 48px;
+  }
+
+  /* Project Cards */
+  .project-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.1);
+  }
+  .project-num {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--surface2);
+    min-width: 60px;
+  }
+  .project-card:hover .project-num { color: var(--accent); }
+  .project-info h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .project-info p { color: var(--text-sub); font-size: 14px; }
+  .project-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .tag-performance { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .tag-content { background: rgba(16,185,129,0.15); color: #34d399; }
+  .tag-seo { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .project-arrow { font-size: 24px; color: var(--text-sub); }
+
+  /* Case Study Detail */
+  .case-study {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    margin-top: 60px;
+  }
+  .case-study h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .case-subtitle {
+    color: var(--text-sub);
+    font-size: 15px;
+    margin-bottom: 40px;
+  }
+
+  .par-section { margin-bottom: 48px; }
+  .par-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  .par-p { background: rgba(239,68,68,0.15); color: #f87171; }
+  .par-a { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .par-r { background: rgba(16,185,129,0.15); color: #34d399; }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .metric-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .metric-box .value {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .metric-box .value.red { color: var(--red); }
+  .metric-box .value.green { color: var(--green); }
+  .metric-box .value.accent { color: var(--accent); }
+  .metric-box .label {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 4px;
+  }
+
+  .action-step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .step-content h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .step-content p { font-size: 14px; color: var(--text-sub); }
+
+  /* Creative Grid */
+  .creative-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .creative-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .creative-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .creative-item .creative-label {
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-sub);
+  }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Timeline */
+  .timeline { margin: 24px 0; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 16px;
+    padding-bottom: 24px;
+    position: relative;
+  }
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 40px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-day {
+    width: 48px;
+    height: 48px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .timeline-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .timeline-content p { font-size: 13px; color: var(--text-sub); }
+
+  /* Result placeholder */
+  .result-pending {
+    background: var(--surface2);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    color: var(--text-sub);
+    font-size: 14px;
+  }
+
+  /* Contact */
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  .contact-box h2 { margin-bottom: 16px; }
+  .contact-box p { color: var(--text-sub); margin-bottom: 32px; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .hero .stats { gap: 24px; }
+    .hero .stat .number { font-size: 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .project-card { grid-template-columns: 1fr; gap: 12px; }
+    .project-num { font-size: 32px; }
+    .project-arrow { display: none; }
+    .creative-grid { grid-template-columns: 1fr; }
+    .case-study { padding: 24px; }
+    .metric-row { grid-template-columns: 1fr 1fr; }
+    nav .nav-links a { margin-left: 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">YR Lee</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="label">Marketing Portfolio</div>
+  <h1 contenteditable="true">0 &rarr; 1 마케팅을 만드는<br>주니어 마케터, 이예란</h1>
+  <p class="subtitle" contenteditable="true">B2B SaaS 스타트업에서 콘텐츠부터 퍼포먼스까지, 아무것도 없는 상태에서 직접 만들었습니다.</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="number" contenteditable="true">76편</div>
+      <div class="desc">콘텐츠 발행</div>
+    </div>
+    <div class="stat">
+      <div class="number" contenteditable="true">3채널</div>
+      <div class="desc">광고 캠페인 세팅</div>
+    </div>
+    <div class="stat">
+      <div class="number" contenteditable="true">5개월</div>
+      <div class="desc">마케팅 경력</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- About -->
+<section id="about">
+  <div class="section-title">About</div>
+  <h2 contenteditable="true">마케팅의 처음부터 끝까지</h2>
+  <div class="about-grid">
+    <div>
+      <p class="about-text" contenteditable="true">
+        서치라이트AI(B2B AI HR Tech 스타트업)에서 마케팅을 전담하고 있습니다.
+        블로그 콘텐츠 기획부터 SEO 전략, 퍼포먼스 광고 세팅, GA4 데이터 분석까지
+        마케팅 인프라가 없는 상태에서 직접 세팅하고 운영한 경험이 있습니다.
+        <br><br>
+        특히 "트래픽은 나오는데 전환이 안 되는" 문제를 진단하고,
+        가설 수립 → 소액 테스트 → 데이터 기반 판단의 사이클을 돌리는 데 집중합니다.
+      </p>
+      <p class="about-text" style="margin-top: 20px; color: var(--accent);">
+        관심 도메인: 게임 &middot; 콘텐츠
+      </p>
+    </div>
+    <div>
+      <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-sub);">TECH STACK</div>
+      <div class="tech-stack">
+        <span class="tech-tag">Google Ads</span>
+        <span class="tech-tag">Meta Ads</span>
+        <span class="tech-tag">GA4</span>
+        <span class="tech-tag">GTM</span>
+        <span class="tech-tag">Meta Pixel</span>
+        <span class="tech-tag">CAPI</span>
+        <span class="tech-tag">Ghost CMS</span>
+        <span class="tech-tag">PostHog</span>
+        <span class="tech-tag">Notion</span>
+        <span class="tech-tag">Claude AI</span>
+        <span class="tech-tag">LinkedIn Ads</span>
+        <span class="tech-tag">Naver Ads</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-title">Projects</div>
+  <h2>케이스 스터디</h2>
+  <p class="section-desc" contenteditable="true">기획부터 실행, 분석까지 전체 과정을 담았습니다.</p>
+
+  <div class="project-cards">
+    <a class="project-card" href="#case-phase0" style="text-decoration:none; color:inherit;">
+      <div class="project-num">01</div>
+      <div class="project-info">
+        <h3>Phase 0 유료 광고 캠페인</h3>
+        <p>트래픽 1,500/주, 리드 0건 → 3채널 전환 캠페인 재설계</p>
+        <div class="project-tags">
+          <span class="tag tag-performance">퍼포먼스</span>
+          <span class="tag tag-content">크리에이티브</span>
+        </div>
+      </div>
+      <div class="project-arrow">&rarr;</div>
+    </a>
+
+    <a class="project-card" href="#case-content" style="text-decoration:none; color:inherit;">
+      <div class="project-num">02</div>
+      <div class="project-info">
+        <h3>블로그 콘텐츠 마케팅</h3>
+        <p>5개월간 76편 발행, SEO/GEO 전략 수립 및 운영</p>
+        <div class="project-tags">
+          <span class="tag tag-content">콘텐츠</span>
+          <span class="tag tag-seo">SEO</span>
+        </div>
+      </div>
+      <div class="project-arrow">&rarr;</div>
+    </a>
+
+    <a class="project-card" href="#case-linkedin" style="text-decoration:none; color:inherit;">
+      <div class="project-num">03</div>
+      <div class="project-info">
+        <h3>LinkedIn 광고 캠페인</h3>
+        <p>HR/CEO 타겟 분리, 소재 톤 A/B 테스트로 CTR 벤치마크 수립</p>
+        <div class="project-tags">
+          <span class="tag tag-performance">퍼포먼스</span>
+        </div>
+      </div>
+      <div class="project-arrow">&rarr;</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Case Study: Phase 0 -->
+<section id="case-phase0">
+  <div class="case-study">
+    <div class="section-title">Case Study 01</div>
+    <h3 contenteditable="true">Phase 0 유료 광고 캠페인</h3>
+    <p class="case-subtitle" contenteditable="true">트래픽은 나오는데 리드가 0 &mdash; 전환 캠페인을 처음부터 재설계하다</p>
+
+    <!-- Problem -->
+    <div class="par-section">
+      <div class="par-label par-p">PROBLEM</div>
+      <p contenteditable="true" style="margin-bottom: 20px;">
+        영상 소재로 Meta 광고를 집행했더니 트래픽은 잘 나왔다. CTR 1.5~2.3%, 주간 유입 1,500명.
+        하지만 문의(리드)는 단 한 건도 없었다. "트래픽 &ne; 전환"이라는 문제를 직면하고,
+        리드를 만들기 위한 채널&middot;소재&middot;퍼널을 처음부터 재설계하기로 했다.
+      </p>
+      <div class="metric-row">
+        <div class="metric-box">
+          <div class="value accent">2.3%</div>
+          <div class="label">최고 CTR</div>
+        </div>
+        <div class="metric-box">
+          <div class="value accent">1,500</div>
+          <div class="label">주간 트래픽</div>
+        </div>
+        <div class="metric-box">
+          <div class="value red">0건</div>
+          <div class="label">리드</div>
+        </div>
+        <div class="metric-box">
+          <div class="value accent">10만원</div>
+          <div class="label">일예산</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action -->
+    <div class="par-section">
+      <div class="par-label par-a">ACTION</div>
+
+      <div class="action-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>원인 진단</h4>
+          <p contenteditable="true">영상 소재가 인지/흥미 유발에는 효과적이지만 전환 의도가 약했다. Meta 단일 채널 의존 + 검색 의도 유저 미확보 + 랜딩→문의 퍼널 미검증이 복합 원인.</p>
+        </div>
+      </div>
+
+      <div class="action-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>3채널 소액 테스트(Phase 0) 설계</h4>
+          <p contenteditable="true">본예산 300만원 투입 전, 35만원(1주)으로 3채널 동시 검증. Google RSA(검색 의도) + Meta 제품 소구점 + Meta 블로그 소구점. GDA는 소액 예산 분산 시 채널당 데이터 부족으로 제외 판단.</p>
+        </div>
+      </div>
+
+      <div class="action-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>전환 특화 소재 6종 제작</h4>
+          <p contenteditable="true">페르소나(스타트업 대표, HR 없이 직접 채용) 기반 소구점 3축 도출: 시간("아직도 링크드인 뒤지고 계세요?") / 품질("또 잘못 뽑으면 3개월 날립니다") / 비용("서치펌 수수료가 아깝지 않으세요?"). 블로그 콘텐츠 3편도 별도 광고 소재로 제작.</p>
+        </div>
+      </div>
+
+      <div style="font-size: 14px; font-weight: 600; margin: 24px 0 12px; color: var(--text-sub);">제품 소구점 크리에이티브</div>
+      <div class="creative-grid">
+        <div class="creative-item">
+          <img src="images/product-time.png" alt="시간 소구점">
+          <div class="creative-label">시간</div>
+        </div>
+        <div class="creative-item">
+          <img src="images/product-quality.png" alt="품질 소구점">
+          <div class="creative-label">품질</div>
+        </div>
+        <div class="creative-item">
+          <img src="images/product-cost.png" alt="비용 소구점">
+          <div class="creative-label">비용</div>
+        </div>
+      </div>
+
+      <div style="font-size: 14px; font-weight: 600; margin: 24px 0 12px; color: var(--text-sub);">블로그 소구점 크리에이티브</div>
+      <div class="creative-grid">
+        <div class="creative-item">
+          <img src="images/blog-screening.png" alt="AI 스크리닝">
+          <div class="creative-label">AI 스크리닝</div>
+        </div>
+        <div class="creative-item">
+          <img src="images/blog-cto.png" alt="CTO 채용">
+          <div class="creative-label">CTO 채용</div>
+        </div>
+        <div class="creative-item">
+          <img src="images/blog-coffeechat.png" alt="커피챗">
+          <div class="creative-label">커피챗 질문리스트</div>
+        </div>
+      </div>
+
+      <div class="action-step" style="margin-top: 24px;">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>실행 + Go/No-Go 기준 사전 수립</h4>
+          <p contenteditable="true">Google Ads RSA(헤드라인 14개+설명 4개), Meta 전환 캠페인 2개 세팅 완료. GA4+Pixel+CAPI 전환 추적, UTM 체계 설계. 1주 후 판단 기준: CPL &le; 7만원, CTR 1개 이상 1.5%+, 퍼널 정상 작동.</p>
+        </div>
+      </div>
+
+      <div style="font-size: 14px; font-weight: 600; margin: 32px 0 12px; color: var(--text-sub);">실행 타임라인</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-day">MON</div>
+          <div class="timeline-content">
+            <h4>계정 세팅 + 소재 기획</h4>
+            <p>캠페인 구조 설계, 타겟 설정, 소재 기획 완료</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">TUE</div>
+          <div class="timeline-content">
+            <h4>소재 제작 + 전 채널 런칭</h4>
+            <p>소재 업로드, 퍼널 점검, 3채널 동시 라이브</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">WED</div>
+          <div class="timeline-content">
+            <h4>D1 데이터 + CRO 진단</h4>
+            <p>채널별 CPC/CTR 기록, 이탈 지점 식별</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">THU</div>
+          <div class="timeline-content">
+            <h4>D2 데이터 + CRO 우선순위</h4>
+            <p>블로그 Top 5 선별, 전환율 개선 아이디어 우선순위</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">FRI</div>
+          <div class="timeline-content">
+            <h4>3일 누적 분석 + 주간 리포트</h4>
+            <p>Go/No-Go 사전 점검, 보고 초안, 다음 주 예산 배분 시나리오</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="par-section">
+      <div class="par-label par-r">RESULT & LEARNINGS</div>
+      <div class="result-pending" contenteditable="true">
+        1주 후 데이터로 업데이트 예정<br><br>
+        &bull; 소구점별 CTR 비교 (시간 / 품질 / 비용)<br>
+        &bull; 채널별 CPL 비교 → 본예산 배분 근거<br>
+        &bull; CRO 진단 → 개선 액션<br>
+        &bull; Phase 0 판단: Go / Pivot (근거)
+      </div>
+    </div>
+
+    <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-sub);">사용 도구</div>
+    <div class="tech-stack">
+      <span class="tech-tag">Google Ads</span>
+      <span class="tech-tag">Meta Ads Manager</span>
+      <span class="tech-tag">GA4</span>
+      <span class="tech-tag">Meta Pixel</span>
+      <span class="tech-tag">CAPI</span>
+      <span class="tech-tag">GTM</span>
+      <span class="tech-tag">Claude AI</span>
+      <span class="tech-tag">Notion</span>
+    </div>
+  </div>
+</section>
+
+<!-- Case Study: Content -->
+<section id="case-content">
+  <div class="case-study">
+    <div class="section-title">Case Study 02</div>
+    <h3 contenteditable="true">블로그 콘텐츠 마케팅</h3>
+    <p class="case-subtitle" contenteditable="true">5개월간 76편 발행 &mdash; SEO/GEO 전략으로 검색 유입 구축</p>
+
+    <div class="par-section">
+      <div class="par-label par-p">PROBLEM</div>
+      <p contenteditable="true">B2B AI HR Tech 스타트업의 브랜드 인지도 0. 검색 유입이 없고, 잠재 고객이 서비스를 발견할 경로가 없는 상태.</p>
+    </div>
+
+    <div class="par-section">
+      <div class="par-label par-a">ACTION</div>
+      <p contenteditable="true">SEO/GEO 키워드 전략을 수립하고, HR/채용 도메인 콘텐츠를 체계적으로 기획&middot;작성&middot;발행. Ghost CMS 기반 블로그 운영, 4채널 배포(LinkedIn, 브런치, 네이버, 이오플래닛), 콘텐츠 성과 추적 체계 구축.</p>
+    </div>
+
+    <div class="par-section">
+      <div class="par-label par-r">RESULT & LEARNINGS</div>
+      <div class="result-pending" contenteditable="true">
+        &bull; 5개월간 76편 발행 (주 3~4편)<br>
+        &bull; 검색 유입 트래픽 변화: 추후 업데이트<br>
+        &bull; 주요 키워드 순위 변화: 추후 업데이트
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Study: LinkedIn -->
+<section id="case-linkedin">
+  <div class="case-study">
+    <div class="section-title">Case Study 03</div>
+    <h3 contenteditable="true">LinkedIn 광고 캠페인</h3>
+    <p class="case-subtitle" contenteditable="true">HR/CEO 타겟 분리 운영으로 소재 톤 벤치마크 수립</p>
+
+    <div class="par-section">
+      <div class="par-label par-p">PROBLEM</div>
+      <p contenteditable="true">B2B SaaS 리드 확보를 위한 LinkedIn 광고. HR 담당자와 CEO/C-Level이라는 서로 다른 의사결정자에게 동시에 도달해야 하는 상황.</p>
+    </div>
+
+    <div class="par-section">
+      <div class="par-label par-a">ACTION</div>
+      <p contenteditable="true">캠페인 A(JD Creator, HR 타겟)와 캠페인 B(C-Level 인재 샘플, CEO 타겟)를 분리 운영. 소재 톤(enforce vs soft) A/B 테스트 진행. Lead Gen Form 최적화.</p>
+    </div>
+
+    <div class="par-section">
+      <div class="par-label par-r">RESULT & LEARNINGS</div>
+      <div class="result-pending" contenteditable="true">
+        &bull; enforce 톤 CTR 1.20% (best performer)<br>
+        &bull; CPC 2,500~3,000원 벤치마크 수립<br>
+        &bull; 타겟별 반응 차이 인사이트 확보
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-box">
+    <div class="section-title">Contact</div>
+    <h2>함께 일하고 싶으시다면</h2>
+    <p contenteditable="true">새로운 기회에 항상 열려 있습니다.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:yrlee@searchright.net">Email</a>
+      <a class="contact-link" href="#" contenteditable="true">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<div style="height: 80px;"></div>
+
+<!-- Edit Button -->
+<button class="edit-toggle" onclick="toggleEdit()">수정하기</button>
+
+<script>
+  let isEditing = false;
+
+  function toggleEdit() {
+    isEditing = !isEditing;
+    document.body.classList.toggle('editing', isEditing);
+    const btn = document.querySelector('.edit-toggle');
+
+    if (isEditing) {
+      btn.textContent = '저장하기';
+      btn.classList.add('active');
+    } else {
+      btn.textContent = '수정하기';
+      btn.classList.remove('active');
+      saveContent();
+    }
+  }
+
+  function saveContent() {
+    const editables = document.querySelectorAll('[contenteditable="true"]');
+    const data = {};
+    editables.forEach((el, i) => {
+      data[i] = el.innerHTML;
+    });
+    localStorage.setItem('portfolio-content', JSON.stringify(data));
+    showToast('저장 완료!');
+  }
+
+  function loadContent() {
+    const saved = localStorage.getItem('portfolio-content');
+    if (saved) {
+      const data = JSON.parse(saved);
+      const editables = document.querySelectorAll('[contenteditable="true"]');
+      editables.forEach((el, i) => {
+        if (data[i] !== undefined) {
+          el.innerHTML = data[i];
+        }
+      });
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.textContent = msg;
+    toast.style.cssText = 'position:fixed;bottom:80px;right:24px;background:#10b981;color:#fff;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;z-index:1001;animation:fadeIn 0.3s';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Load saved content
+  loadContent();
+</script>
+
+</body>
+</html>
