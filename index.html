@@ -804,7 +804,7 @@
 <!-- Edit Buttons -->
 <div style="position:fixed;bottom:24px;right:24px;display:flex;gap:10px;z-index:1000;">
   <button class="edit-toggle" id="downloadBtn" onclick="downloadHTML()" style="display:none;background:#f59e0b;">다운로드</button>
-  <button class="edit-toggle" onclick="toggleEdit()">수정하기</button>
+  <button class="edit-toggle" id="editBtn" onclick="toggleEdit()">수정하기</button>
 </div>
 
 <script>
@@ -813,8 +813,7 @@
   function toggleEdit() {
     isEditing = !isEditing;
     document.body.classList.toggle('editing', isEditing);
-    const btn = document.querySelector('.edit-toggle');
-
+    const btn = document.getElementById('editBtn');
     const dlBtn = document.getElementById('downloadBtn');
     if (isEditing) {
       btn.textContent = '저장하기';
