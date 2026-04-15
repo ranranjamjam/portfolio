@@ -278,11 +278,11 @@
     const editables = document.querySelectorAll('[contenteditable="true"]');
     const data = {};
     editables.forEach((el, i) => { data[i] = el.innerHTML; });
-    localStorage.setItem('notes-content', JSON.stringify(data));
+    localStorage.setItem('notes-content-v2', JSON.stringify(data));
     showToast('저장 완료!');
   }
   function loadContent() {
-    const saved = localStorage.getItem('notes-content');
+    const saved = localStorage.getItem('notes-content-v2');
     if (saved) {
       const data = JSON.parse(saved);
       const editables = document.querySelectorAll('[contenteditable="true"]');
