@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes | 이예란</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fafafa; --surface: #ffffff; --surface2: #f4f4f4; --border: #e5e5e5;
+    --text: #0a0a0a; --text-sub: #666666; --text-mute: #999999;
+    --green: #10b981;
+  }
+  html, body { cursor: none; }
+  body { font-family: 'Inter', 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a, button, [contenteditable="true"] { cursor: none; }
+
+  /* Cursor */
+  .cursor-dot { position: fixed; top: 0; left: 0; width: 6px; height: 6px; background: var(--text); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease; }
+  .cursor-ring { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border: 1.5px solid var(--text); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.2s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease; mix-blend-mode: difference; }
+  .cursor-ring.hover { width: 72px; height: 72px; background: var(--text); }
+  .cursor-dot.hover { opacity: 0; }
+  @media (max-width: 768px), (hover: none) {
+    html, body, a, button, [contenteditable="true"] { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+
+  /* Edit */
+  .edit-toggle { background: var(--text); color: #fff; border: none; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: none; box-shadow: 0 4px 20px rgba(0,0,0,0.15); transition: all 0.2s; }
+  .edit-toggle:hover { transform: translateY(-2px); }
+  .edit-toggle.active { background: var(--green); }
+  body.editing [contenteditable="true"] { outline: 1px dashed var(--text); outline-offset: 4px; border-radius: 4px; }
+
+  /* Nav */
+  nav { position: fixed; top: 0; width: 100%; background: rgba(250,250,250,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; padding: 16px 0; }
+  nav .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+  nav .logo { font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+  nav .nav-links a { color: var(--text-sub); text-decoration: none; margin-left: 28px; font-size: 14px; transition: color 0.2s; }
+  nav .nav-links a:hover { color: var(--text); }
+  nav .nav-links a.current { color: var(--text); font-weight: 600; }
+
+  /* Intro */
+  .intro { max-width: 1100px; margin: 0 auto; padding: 160px 24px 60px; text-align: center; }
+  .section-label { font-size: 13px; color: var(--text-mute); font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .intro h1 { font-size: 56px; font-weight: 700; line-height: 1.15; letter-spacing: -0.03em; max-width: 820px; margin: 0 auto 20px; }
+  .intro p { font-size: 17px; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+
+  /* View Toggle */
+  .view-toggle { display: flex; justify-content: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px; width: fit-content; margin: 0 auto 48px; }
+  .view-btn { background: transparent; border: none; padding: 8px 14px; border-radius: 999px; cursor: none; color: var(--text-mute); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .view-btn svg { width: 18px; height: 18px; }
+  .view-btn.active { background: var(--text); color: #fff; }
+
+  /* Notes Sections */
+  .notes { max-width: 1100px; margin: 0 auto; padding: 20px 24px 100px; }
+  .notes-inner { max-width: 820px; margin: 0 auto; transition: max-width 0.3s ease; }
+  .notes.gallery-view .notes-inner { max-width: 1100px; }
+  .notes-section { margin-bottom: 80px; }
+  .notes-section:last-child { margin-bottom: 0; }
+  .notes-heading { display: flex; align-items: baseline; gap: 12px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .notes-heading .emoji { font-size: 24px; }
+  .notes-heading h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .notes-heading .count { color: var(--text-mute); font-size: 14px; font-weight: 500; }
+
+  /* LIST VIEW (default) */
+  .note-list { display: flex; flex-direction: column; }
+  .note-item { display: grid; grid-template-columns: 140px 1fr auto; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; transition: all 0.2s; text-decoration: none; color: inherit; }
+  .note-item:last-child { border-bottom: none; }
+  .note-item:hover { padding-left: 12px; }
+  .note-meta { font-size: 13px; color: var(--text-mute); font-weight: 500; letter-spacing: 0.3px; }
+  .note-title { font-size: 17px; font-weight: 500; line-height: 1.5; color: var(--text); }
+  .note-title .desc { display: block; font-size: 14px; color: var(--text-sub); font-weight: 400; margin-top: 4px; line-height: 1.5; }
+  .note-arrow { color: var(--text-mute); font-size: 14px; transition: transform 0.2s, color 0.2s; }
+  .note-item:hover .note-arrow { color: var(--text); transform: translateX(4px); }
+
+  /* Book / Project list layouts */
+  .book-list .note-item { grid-template-columns: 1fr auto; }
+  .book-list .book-author { color: var(--text-mute); font-weight: 400; }
+  .project-list .note-item { grid-template-columns: 1fr auto; }
+  .note-status { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mute); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .note-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .note-status.done::before { background: #3b82f6; }
+  .note-status.planning::before { background: #f59e0b; }
+
+  /* GALLERY VIEW */
+  .notes.gallery-view .note-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .notes.gallery-view .note-item { display: flex; flex-direction: column; gap: 0; padding: 0; border-bottom: none; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; align-items: stretch; transition: all 0.25s ease; }
+  .notes.gallery-view .note-item:hover { padding-left: 0; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--text); }
+  .notes.gallery-view .note-item::before { content: ''; display: block; aspect-ratio: 16 / 10; background: linear-gradient(135deg, #f4f4f4 0%, #e5e5e5 100%); border-bottom: 1px solid var(--border); position: relative; }
+  .notes.gallery-view .writing-list .note-item::before { background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); }
+  .notes.gallery-view .book-list .note-item::before { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+  .notes.gallery-view .project-list .note-item::before { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+  .notes.gallery-view .note-meta { order: 1; padding: 18px 20px 6px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+  .notes.gallery-view .note-title { order: 2; padding: 0 20px 20px; font-size: 17px; font-weight: 600; flex: 1; }
+  .notes.gallery-view .note-title .desc { font-size: 13px; margin-top: 8px; color: var(--text-sub); font-weight: 400; }
+  .notes.gallery-view .note-arrow { order: 3; padding: 0 20px 18px; font-size: 13px; color: var(--text-mute); }
+  .notes.gallery-view .book-list .note-item { grid-template-columns: none; }
+  .notes.gallery-view .book-list .book-author { order: 1; padding: 18px 20px 6px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-mute); font-weight: 600; }
+  .notes.gallery-view .book-list .note-title { order: 2; }
+  .notes.gallery-view .project-list .note-item { grid-template-columns: none; }
+  .notes.gallery-view .project-list .note-status { order: 1; padding: 18px 20px 6px; }
+  .notes.gallery-view .project-list .note-title { order: 2; }
+
+  /* Footer */
+  footer { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; color: var(--text-mute); font-size: 13px; border-top: 1px solid var(--border); }
+  footer a { color: var(--text-sub); text-decoration: none; margin-left: 20px; transition: color 0.2s; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 900px) {
+    .notes.gallery-view .note-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .intro h1 { font-size: 36px; }
+    .note-item { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
+    .note-item:hover { padding-left: 0; }
+    .note-arrow { display: none; }
+    .notes.gallery-view .note-list { grid-template-columns: 1fr; }
+    nav .nav-links a { margin-left: 14px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">&larr; YR Lee</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="notes.html" class="current">Notes</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Intro -->
+<section class="intro">
+  <div class="section-label">Notes</div>
+  <h1 contenteditable="true">생각하고, 읽고,<br>만들고 있는 것들</h1>
+  <p contenteditable="true">일하면서 쓴 글, 요즘 읽는 책, 개인적으로 굴려보는 사이드 프로젝트를 한 곳에 모아둡니다.</p>
+</section>
+
+<!-- View Toggle -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('list')" data-view="list" aria-label="List view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <button class="view-btn" onclick="switchView('gallery')" data-view="gallery" aria-label="Gallery view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="notes" id="notesRoot">
+  <div class="notes-inner">
+
+  <!-- Writings -->
+  <section class="notes-section">
+    <div class="notes-heading">
+      <span class="emoji">✍️</span>
+      <h2>내가 쓴 글</h2>
+      <span class="count" contenteditable="true">Ghost · 브런치 · LinkedIn</span>
+    </div>
+    <div class="note-list writing-list">
+      <div class="empty-state" contenteditable="true">아직 추가된 글이 없어요. 수정하기로 추가해 주세요.</div>
+    </div>
+  </section>
+
+  <!-- Books -->
+  <section class="notes-section">
+    <div class="notes-heading">
+      <span class="emoji">📚</span>
+      <h2>읽은 책</h2>
+      <span class="count" contenteditable="true">최근 읽었거나 다시 들여다보는 책</span>
+    </div>
+    <div class="note-list book-list">
+      <div class="empty-state" contenteditable="true">아직 추가된 책이 없어요. 수정하기로 추가해 주세요.</div>
+    </div>
+  </section>
+
+  <!-- Side Projects -->
+  <section class="notes-section">
+    <div class="notes-heading">
+      <span class="emoji">🎮</span>
+      <h2>사이드 프로젝트</h2>
+      <span class="count" contenteditable="true">일 밖에서 굴려보는 것들</span>
+    </div>
+    <div class="note-list project-list">
+      <div class="empty-state" contenteditable="true">아직 추가된 프로젝트가 없어요. 수정하기로 추가해 주세요.</div>
+    </div>
+  </section>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div>&copy; 2026 YR Lee</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="mailto:yrlee@searchright.net">Email</a>
+  </div>
+</footer>
+
+<!-- Edit Buttons -->
+<div style="position:fixed;bottom:24px;right:24px;display:flex;gap:12px;z-index:1000;">
+  <button class="edit-toggle" id="downloadBtn" onclick="downloadHTML()" style="display:none;background:#f59e0b;">다운로드</button>
+  <button class="edit-toggle" id="editBtn" onclick="toggleEdit()">수정하기</button>
+</div>
+
+<script>
+  // Cursor
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button, .note-item, [contenteditable="true"]').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursorRing.classList.add('hover'); cursorDot.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursorRing.classList.remove('hover'); cursorDot.classList.remove('hover'); });
+  });
+
+  // View toggle
+  function switchView(view) {
+    const root = document.getElementById('notesRoot');
+    root.classList.toggle('gallery-view', view === 'gallery');
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  }
+
+  // Edit
+  let isEditing = false;
+  function toggleEdit() {
+    isEditing = !isEditing;
+    document.body.classList.toggle('editing', isEditing);
+    const btn = document.getElementById('editBtn');
+    const dlBtn = document.getElementById('downloadBtn');
+    if (isEditing) { btn.textContent = '저장하기'; btn.classList.add('active'); dlBtn.style.display = 'block'; }
+    else { btn.textContent = '수정하기'; btn.classList.remove('active'); dlBtn.style.display = 'none'; saveContent(); }
+  }
+  function saveContent() {
+    const editables = document.querySelectorAll('[contenteditable="true"]');
+    const data = {};
+    editables.forEach((el, i) => { data[i] = el.innerHTML; });
+    localStorage.setItem('notes-content', JSON.stringify(data));
+    showToast('저장 완료!');
+  }
+  function loadContent() {
+    const saved = localStorage.getItem('notes-content');
+    if (saved) {
+      const data = JSON.parse(saved);
+      const editables = document.querySelectorAll('[contenteditable="true"]');
+      editables.forEach((el, i) => { if (data[i] !== undefined) el.innerHTML = data[i]; });
+    }
+  }
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.textContent = msg;
+    toast.style.cssText = 'position:fixed;bottom:80px;right:24px;background:#10b981;color:#fff;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;z-index:1001;';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  }
+  function downloadHTML() {
+    const clone = document.documentElement.cloneNode(true);
+    const editDiv = clone.querySelector('div[style*="position:fixed;bottom:24px"]');
+    if (editDiv) editDiv.remove();
+    const scripts = clone.querySelectorAll('script');
+    scripts[scripts.length - 1].remove();
+    clone.querySelector('body').classList.remove('editing');
+    clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'notes.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('다운로드 완료!');
+  }
+  loadContent();
+</script>
+</body>
+</html>
