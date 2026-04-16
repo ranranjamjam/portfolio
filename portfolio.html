@@ -305,6 +305,26 @@
           <div class="metric-box"><div class="value red">0건</div><div class="label">리드</div></div>
           <div class="metric-box"><div class="value accent">10만원</div><div class="label">일예산</div></div>
         </div>
+
+        <div style="font-size:13px;font-weight:600;margin:28px 0 12px;color:var(--text-mute);letter-spacing:1.5px;">채널별 /request/ 페이지 체류시간 (GA4 실측)</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;line-height:2;">
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;font-weight:600;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;">
+            <span>채널</span><span style="text-align:right;">조회수</span><span style="text-align:right;">체류시간</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;color:var(--red);">
+            <span style="font-weight:600;">Meta / paid</span><span style="text-align:right;">2,058</span><span style="text-align:right;font-weight:700;">0.7초</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>Direct</span><span style="text-align:right;">220</span><span style="text-align:right;">36.6초</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;color:var(--green);">
+            <span style="font-weight:600;">Google / organic</span><span style="text-align:right;">198</span><span style="text-align:right;font-weight:700;">34.3초</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>LinkedIn / referral</span><span style="text-align:right;">80</span><span style="text-align:right;">8.5초</span>
+          </div>
+          <p style="margin-top:12px;color:var(--text-sub);font-size:13px;" contenteditable="true">&rarr; Meta 유료 트래픽 2,058명은 평균 0.7초 만에 이탈. 반면 Google organic 198명은 34.3초 체류. "검색 의도가 있는 유저"를 잡아야 전환이 나온다는 가설의 데이터 근거.</p>
+        </div>
       </div>
 
       <div class="par-section">
@@ -426,11 +446,58 @@
         <div class="par-label par-r">RESULT & LEARNINGS</div>
         <div class="metric-row">
           <div class="metric-box"><div class="value accent">76편</div><div class="label">총 발행 (2/23~4/9)</div></div>
-          <div class="metric-box"><div class="value accent">31편</div><div class="label">3월 한 달 발행</div></div>
+          <div class="metric-box"><div class="value accent">~2x</div><div class="label">Organic 트래픽 성장</div></div>
           <div class="metric-box"><div class="value accent">4채널</div><div class="label">배포 채널</div></div>
           <div class="metric-box"><div class="value accent">1인</div><div class="label">기획&middot;작성&middot;발행</div></div>
         </div>
+
+        <div style="font-size:13px;font-weight:600;margin:20px 0 12px;color:var(--text-mute);letter-spacing:1.5px;">Organic Search 월별 추이 (GA4, 내부 트래픽 보정)</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;line-height:2;">
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;font-weight:600;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;">
+            <span>월</span><span style="text-align:right;">조회수</span><span style="text-align:right;">유저</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;color:var(--text-mute);">
+            <span>2025.11 (블로그 전)</span><span style="text-align:right;">~744</span><span style="text-align:right;">~233</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;color:var(--text-mute);">
+            <span>2025.12</span><span style="text-align:right;">~895</span><span style="text-align:right;">~233</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;color:var(--text-mute);">
+            <span>2026.01</span><span style="text-align:right;">~1,219</span><span style="text-align:right;">~274</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;">
+            <span>2026.02 (블로그 시작)</span><span style="text-align:right;">~1,113</span><span style="text-align:right;">~187</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;">
+            <span>2026.03 (31편 발행)</span><span style="text-align:right;">~1,750</span><span style="text-align:right;">~300</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 100px 80px;gap:8px;font-weight:600;color:var(--green);">
+            <span>2026.04 (월 예상)</span><span style="text-align:right;">~1,665</span><span style="text-align:right;">250+</span>
+          </div>
+        </div>
+
+        <div style="font-size:13px;font-weight:600;margin:24px 0 12px;color:var(--text-mute);letter-spacing:1.5px;">트래픽 상위 블로그 글 TOP 5</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;line-height:2;">
+          <div style="display:grid;grid-template-columns:1fr 60px;gap:8px;">
+            <span>커피챗 질문리스트 2026</span><span style="text-align:right;font-weight:600;">202</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 60px;gap:8px;">
+            <span>AI 인재 리스트 제작 6단계</span><span style="text-align:right;font-weight:600;">198</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 60px;gap:8px;">
+            <span>링크드인 커피챗 요청법</span><span style="text-align:right;font-weight:600;">183</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 60px;gap:8px;">
+            <span>사람인 vs 원티드 vs 리멤버</span><span style="text-align:right;font-weight:600;">181</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 60px;gap:8px;">
+            <span>AI 맥락 기반 스크리닝</span><span style="text-align:right;font-weight:600;">173</span>
+          </div>
+          <p style="margin-top:12px;color:var(--text-sub);font-size:13px;" contenteditable="true">&rarr; HR 실무 팁 콘텐츠(커피챗, 채용 비교)가 코어 콘텐츠(루피, AX)보다 트래픽 높음. "트래픽용 vs 전환용 이원화" 전략이 유효했다는 증거.</p>
+        </div>
+
         <div class="result-pending" contenteditable="true" style="margin-top:16px;">
+          &bull; 블로그 시작 전(Nov) 대비 Organic 트래픽 약 2배 성장<br>
           &bull; 자체 블로그 플랫폼으로 SEO 자산 내재화<br>
           &bull; 트래픽용 vs 전환용 콘텐츠 이원화 체계 확립<br>
           &bull; 검색 노출 기반 마련 (DA/기술적 최적화는 진행 중)
@@ -767,11 +834,11 @@
     const editables = document.querySelectorAll('[contenteditable="true"]');
     const data = {};
     editables.forEach((el, i) => { data[i] = el.innerHTML; });
-    localStorage.setItem('portfolio-content', JSON.stringify(data));
+    localStorage.setItem('portfolio-content-v2', JSON.stringify(data));
     showToast('저장 완료!');
   }
   function loadContent() {
-    const saved = localStorage.getItem('portfolio-content');
+    const saved = localStorage.getItem('portfolio-content-v2');
     if (saved) {
       const data = JSON.parse(saved);
       const editables = document.querySelectorAll('[contenteditable="true"]');
