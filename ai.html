@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI System | 이예란</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fafafa; --surface: #ffffff; --surface2: #f4f4f4; --border: #e5e5e5;
+    --text: #0a0a0a; --text-sub: #666666; --text-mute: #999999;
+    --green: #10b981; --blue: #3b82f6;
+  }
+  html, body { cursor: none; }
+  body { font-family: 'Inter', 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a, button { cursor: none; }
+
+  /* Cursor */
+  .cursor-dot { position: fixed; top: 0; left: 0; width: 6px; height: 6px; background: var(--text); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease; }
+  .cursor-ring { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border: 1.5px solid var(--text); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.2s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease; mix-blend-mode: difference; }
+  .cursor-ring.hover { width: 72px; height: 72px; background: var(--text); }
+  .cursor-dot.hover { opacity: 0; }
+  @media (max-width: 768px), (hover: none) {
+    html, body, a, button { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+
+  /* Nav */
+  nav { position: fixed; top: 0; width: 100%; background: rgba(250,250,250,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; padding: 22px 0; }
+  nav .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+  nav .logo { font-weight: 700; font-size: 24px; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+  nav .nav-links a { color: var(--text-sub); text-decoration: none; margin-left: 36px; font-size: 17px; font-weight: 500; transition: color 0.2s; }
+  nav .nav-links a:hover { color: var(--text); }
+  nav .nav-links a.current { color: var(--text); font-weight: 600; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; max-width: 1100px; margin: 0 auto; }
+  .tech-tag { background: var(--surface); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 13px; color: var(--text-sub); }
+
+  /* Footer */
+  footer { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; color: var(--text-mute); font-size: 13px; }
+  footer a { color: var(--text-sub); text-decoration: none; margin-left: 20px; transition: color 0.2s; }
+  footer a:hover { color: var(--text); }
+
+  /* Function Card */
+  .fn-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; transition: all 0.2s; }
+  .fn-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.08); }
+
+  @media (max-width: 768px) {
+    nav .nav-links a { margin-left: 20px; font-size: 15px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .fn-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">&larr; YR Lee</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="ai.html" class="current">AI</a>
+      <a href="notes.html">Notes</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section style="max-width:900px;margin:0 auto;padding:160px 24px 80px;text-align:center;">
+  <span style="display:inline-block;border:1px solid var(--border);border-radius:999px;padding:6px 20px;font-size:12px;font-weight:600;letter-spacing:2px;color:var(--text-sub);text-transform:uppercase;margin-bottom:24px;">AI-Native 마케팅 시스템</span>
+  <h1 style="font-size:48px;font-weight:700;line-height:1.15;letter-spacing:-0.03em;margin-bottom:16px;">1인 마케터의<br><span style="color:var(--blue);">AI 마케팅 운영체제</span></h1>
+  <p style="color:var(--text-sub);font-size:16px;max-width:600px;margin:0 auto;">
+    Claude 스킬 + MCP + 메모리 시스템으로 <strong>1인 마케터가 6개 마케팅 펑션을 풀커버</strong>합니다.<br>
+    반복 업무를 자동화하고, 판단이 필요한 업무에 집중합니다.
+  </p>
+</section>
+
+<!-- Stats -->
+<section style="max-width:900px;margin:0 auto;padding:0 24px 48px;">
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;">
+      <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">11</div>
+      <div style="font-size:12px;color:var(--text-sub);margin-top:4px;">커스텀 스킬</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;">
+      <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">6</div>
+      <div style="font-size:12px;color:var(--text-sub);margin-top:4px;">MCP 연동</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;">
+      <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">6</div>
+      <div style="font-size:12px;color:var(--text-sub);margin-top:4px;">마케팅 펑션</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;">
+      <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">1</div>
+      <div style="font-size:12px;color:var(--text-sub);margin-top:4px;">마케터</div>
+    </div>
+  </div>
+</section>
+
+<!-- Flow -->
+<section style="max-width:900px;margin:0 auto;padding:0 24px 16px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="font-size:24px;margin-bottom:4px;">&#129504;</div>
+      <div style="font-size:14px;font-weight:600;">메모리</div>
+      <div style="font-size:11px;color:var(--text-mute);max-width:160px;">회사 맥락&middot;컨벤션 자동 참조</div>
+    </div>
+    <div style="color:var(--text-mute);font-size:18px;">&times;</div>
+    <div style="text-align:center;">
+      <div style="font-size:24px;margin-bottom:4px;">&#9889;</div>
+      <div style="font-size:14px;font-weight:600;">11개 스킬</div>
+      <div style="font-size:11px;color:var(--text-mute);max-width:160px;">펑션별 트리거로 즉시 실행</div>
+    </div>
+    <div style="color:var(--text-mute);font-size:18px;">&times;</div>
+    <div style="text-align:center;">
+      <div style="font-size:24px;margin-bottom:4px;">&#128268;</div>
+      <div style="font-size:14px;font-weight:600;">6개 MCP</div>
+      <div style="font-size:11px;color:var(--text-mute);max-width:160px;">Notion&middot;Slack&middot;GA4 실시간 연결</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="max-width:900px;margin:0 auto;padding:0 24px 60px;">
+  <div style="background:var(--blue);color:#fff;border-radius:12px;padding:16px;text-align:center;font-size:15px;font-weight:600;">
+    = 1인 마케터가 팀 규모의 아웃풋
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- 6 Functions -->
+<section style="max-width:900px;margin:0 auto;padding:60px 24px;">
+  <div style="font-size:13px;color:var(--text-sub);margin-bottom:20px;">
+    <strong>6개</strong>&nbsp;&nbsp;마케팅 펑션
+  </div>
+
+  <div class="fn-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#9997;&#65039; 콘텐츠 & SEO</div>
+        <span style="font-size:12px;color:var(--text-mute);">4개</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        content-monitor &middot; content-draft &middot; content-publish &middot; content-analytics
+      </div>
+    </div>
+
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#128202; 광고 & 퍼포먼스</div>
+        <span style="font-size:12px;color:var(--text-mute);">3개</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        ads-tracking &middot; campaign-planning &middot; performance-analytics
+      </div>
+    </div>
+
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#127912; 브랜드 & 카피</div>
+        <span style="font-size:12px;color:var(--text-mute);">2개</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        brand-voice &middot; content-creation
+      </div>
+    </div>
+
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#128200; 데이터 & 트렌드</div>
+        <span style="font-size:12px;color:var(--text-mute);">2개</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        competitive-analysis &middot; ai-trend-scout &middot; GA4 커스텀 쿼리
+      </div>
+    </div>
+
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#128640; 채널 배포</div>
+        <span style="font-size:12px;color:var(--text-mute);">자동화</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        네이버 &middot; 브런치 &middot; LinkedIn &middot; 이오플래닛 4채널 자동 배포
+      </div>
+    </div>
+
+    <div class="fn-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:var(--blue);">&#128140; 이메일 & 뉴스레터</div>
+        <span style="font-size:12px;color:var(--text-mute);">월 1회</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-sub);line-height:1.8;">
+        뉴스레터 초안 자동 생성 &middot; Stibee 발송 &middot; 오픈율 46.1%
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- How It Works -->
+<section style="max-width:900px;margin:0 auto;padding:60px 24px;">
+  <div style="font-size:13px;color:var(--text-mute);font-weight:500;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">How it works</div>
+  <h2 style="font-size:32px;font-weight:700;margin-bottom:40px;letter-spacing:-0.02em;">어떻게 작동하는가</h2>
+
+  <div style="display:grid;gap:32px;">
+    <!-- Step 1 -->
+    <div style="display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;">
+      <div style="width:44px;height:44px;background:var(--text);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;">1</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:600;margin-bottom:8px;">CLAUDE.md &mdash; 시스템 설계서</h3>
+        <p style="font-size:14px;color:var(--text-sub);line-height:1.8;">프로젝트 컨텍스트, 에이전트 라우팅 규칙, 지식베이스 참조 경로, 피드백 루프를 하나의 마크다운 파일에 정의합니다. Claude가 세션을 시작할 때 이 파일을 읽고 "비서실장"으로서의 역할과 판단 기준을 자동으로 갖춥니다.</p>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div style="display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;">
+      <div style="width:44px;height:44px;background:var(--text);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;">2</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:600;margin-bottom:8px;">커스텀 스킬 &mdash; 반복 업무 자동화</h3>
+        <p style="font-size:14px;color:var(--text-sub);line-height:1.8;"><code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:13px;">/content monitor</code> 한 줄이면 내부&middot;외부 소스를 스캔해 블로그 소재 5~10개를 제안합니다. <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:13px;">/content draft</code>로 SEO 최적화된 초안을 생성하고, <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:13px;">/content publish</code>로 Ghost CMS에 바로 발행합니다.</p>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div style="display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;">
+      <div style="width:44px;height:44px;background:var(--text);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;">3</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:600;margin-bottom:8px;">MCP &mdash; 외부 도구 실시간 연결</h3>
+        <p style="font-size:14px;color:var(--text-sub);line-height:1.8;">Notion에서 프로젝트 문서를 가져오고, Slack 대화를 검색하고, Google Calendar에 일정을 만듭니다. GA4 Data API로 트래픽&middot;전환 데이터를 실시간 조회합니다. 별도 대시보드 없이 CLI 한 곳에서 모든 데이터에 접근합니다.</p>
+      </div>
+    </div>
+    <!-- Step 4 -->
+    <div style="display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;">
+      <div style="width:44px;height:44px;background:var(--text);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;">4</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:600;margin-bottom:8px;">메모리 & 학습 &mdash; 피드백이 쌓인다</h3>
+        <p style="font-size:14px;color:var(--text-sub);line-height:1.8;">대화 중 사실 보정이나 실무 노하우를 감지하면 <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:13px;">knowledge/</code>에 자동 저장합니다. 같은 실수를 반복하지 않고, 회사 맥락에 맞는 판단을 점점 더 정확하게 합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Powered By -->
+<section style="max-width:900px;margin:0 auto;padding:60px 24px 80px;">
+  <div style="font-size:13px;font-weight:600;color:var(--text-mute);letter-spacing:1.5px;margin-bottom:16px;">POWERED BY</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <span class="tech-tag">Claude Code</span>
+    <span class="tech-tag">CLAUDE.md</span>
+    <span class="tech-tag">Custom Skills (.md)</span>
+    <span class="tech-tag">MCP (Notion &middot; Slack &middot; Calendar)</span>
+    <span class="tech-tag">Memory System (RLVR)</span>
+    <span class="tech-tag">Ghost CMS API</span>
+    <span class="tech-tag">GA4 Data API</span>
+    <span class="tech-tag">GitHub</span>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>&copy; 2026 YR Lee</div>
+  <div>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="ai.html">AI</a>
+    <a href="notes.html">Notes</a>
+    <a href="mailto:yrlee@searchright.net">Email</a>
+  </div>
+</footer>
+
+<script>
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button, .fn-card, .tech-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursorRing.classList.add('hover'); cursorDot.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursorRing.classList.remove('hover'); cursorDot.classList.remove('hover'); });
+  });
+</script>
+</body>
+</html>
