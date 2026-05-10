@@ -100,11 +100,103 @@
   .axis-title { font-size: 40px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; }
 
   /* Step blocks */
-  .step-block { margin-bottom: 32px; }
-  .step-label { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mute); margin-bottom: 12px; padding: 4px 10px; background: var(--surface2); border-radius: 6px; }
+  .step-block { margin-bottom: 48px; }
+  .step-label {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    margin-bottom: 18px;
+    padding: 6px 14px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border-left: 3px solid var(--text-mute);
+  }
+  .step-label.bottleneck { color: #c2410c; background: rgba(245, 158, 11, 0.1); border-left-color: var(--warn); }
+  .step-label.hypothesis { color: var(--accent); background: rgba(37, 99, 235, 0.08); border-left-color: var(--accent); }
+  .step-label.how { color: var(--text); background: var(--surface2); border-left-color: var(--text); }
+  .step-label.result { color: #047857; background: rgba(16, 185, 129, 0.08); border-left-color: var(--green); }
+
   .step-content { font-size: 17px; line-height: 1.8; color: var(--text); }
   .step-content.subtle { color: var(--text-sub); font-size: 15px; }
-  .hypothesis-text { font-size: 22px; font-weight: 600; line-height: 1.5; color: var(--text); }
+
+  /* Hypothesis — hero box */
+  .hypothesis-text {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    padding: 28px 32px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.04) 0%, rgba(16, 185, 129, 0.04) 100%);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 16px 16px 0;
+    margin: 0;
+  }
+
+  /* Activate gradient text on Hero H1 + hypothesis */
+  .hero-title.gradient-text-ready {
+    background: linear-gradient(135deg, #0a0a0a 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Metric highlight */
+  .metric { color: var(--accent); font-weight: 700; }
+  .metric-green { color: var(--green); font-weight: 700; }
+  .metric-warn { color: #c2410c; font-weight: 700; }
+
+  /* How-step cards */
+  .how-steps { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .how-step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    align-items: start;
+    transition: var(--transition-card);
+  }
+  .how-step-card:hover { box-shadow: var(--shadow-card-hover); }
+  .how-step-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .how-step-body { font-size: 15px; line-height: 1.7; color: var(--text); }
+  .how-step-body strong { font-weight: 700; }
+  .how-step-body ul { margin-top: 10px; }
+  .how-step-body ul li { padding-left: 14px; position: relative; margin-bottom: 6px; font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+  .how-step-body ul li::before { content: '·'; position: absolute; left: 0; color: var(--text-mute); }
+  .how-step-aside { color: var(--text-sub); font-size: 14px; margin-top: 8px; font-style: italic; }
+
+  /* Result hero metric */
+  .result-hero {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+    margin: 16px 0 28px;
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(37, 99, 235, 0.06) 100%);
+    border-radius: 16px;
+  }
+  .result-hero-number { font-size: 64px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--green); }
+  .result-hero-label { font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+  .result-hero-label strong { color: var(--text); font-weight: 600; }
+
+  /* Per-panel accent colors */
+  [data-panel="0"] .axis-num { color: var(--accent); }
+  [data-panel="1"] .axis-num { color: var(--green); }
+  [data-panel="2"] .axis-num { color: #c2410c; }
 
   /* Lists */
   .axis ul { list-style: none; }
@@ -143,19 +235,20 @@
   .triad-label .role { color: var(--accent); margin-left: 6px; font-weight: 600; }
   .triad-content { font-size: 14px; color: var(--text-sub); line-height: 1.7; }
 
-  /* Capture frame (placeholder) */
-  .capture { margin-top: 28px; }
+  /* Capture frame (placeholder) — slim */
+  .capture { margin-top: 20px; }
   .capture-frame {
     background: var(--surface2);
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    padding: 60px 24px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 24px 20px;
     text-align: center;
     color: var(--text-mute);
-    font-size: 13px;
+    font-size: 12px;
+    line-height: 1.5;
   }
-  .capture-frame .placeholder-tag { display: inline-block; padding: 4px 12px; background: var(--warn); color: #fff; border-radius: 6px; font-weight: 600; margin-bottom: 12px; font-size: 11px; letter-spacing: 1px; }
-  .capture figcaption { margin-top: 12px; font-size: 13px; color: var(--text-mute); text-align: center; }
+  .capture-frame .placeholder-tag { display: inline-block; padding: 3px 10px; background: var(--warn); color: #fff; border-radius: 5px; font-weight: 600; margin-bottom: 8px; font-size: 10px; letter-spacing: 0.8px; }
+  .capture figcaption { margin-top: 8px; font-size: 12px; color: var(--text-mute); text-align: center; }
 
   /* Inspiration source */
   .inspiration { margin-top: 24px; padding: 16px 20px; background: var(--surface2); border-radius: 10px; font-size: 13px; color: var(--text-sub); line-height: 1.6; }
@@ -189,6 +282,21 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Tab Navigation */
+  .tab-nav-section { max-width: var(--content-max-width); margin: 0 auto; padding: 0 24px; position: sticky; top: 70px; background: rgba(250,250,250,0.95); backdrop-filter: blur(20px); z-index: 50; }
+  .tab-nav { display: flex; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .tab-btn { padding: 12px 18px; background: transparent; border: none; cursor: none; font-size: 15px; color: var(--text-sub); border-bottom: 2px solid transparent; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 8px; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab-btn .tab-num { font-size: 11px; color: var(--text-mute); font-weight: 600; letter-spacing: 1px; }
+  .tab-btn.active .tab-num { color: var(--accent); }
+  .tab-content { max-width: var(--content-max-width); margin: 0 auto; }
+  .tab-panel { display: none; animation: fadeInUp 0.4s ease-out; }
+  .tab-panel.active { display: block; }
+
+  /* When tabs active, axis section borders are subtle */
+  .tab-panel .axis { border-top: none; padding-top: 40px; }
+
   /* Closing line in axis 3 */
   .closing-note {
     margin-top: 32px;
@@ -211,13 +319,22 @@
     .tech-row { grid-template-columns: 1fr; gap: 4px; }
     .result-row { grid-template-columns: 1fr; gap: 6px; }
     .result-row .arrow { display: none; }
+    .how-step-card { grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 20px; }
+    .how-step-num { font-size: 18px; }
+    .result-hero { grid-template-columns: 1fr; text-align: center; gap: 12px; padding: 24px; }
+    .result-hero-number { font-size: 56px; }
+    .tab-nav { gap: 0; }
+    .tab-btn { padding: 10px 12px; font-size: 13px; }
+    .tab-btn span:not(.tab-num) { display: none; }
   }
   @media (max-width: 768px) {
     .hero { padding: 120px 24px 60px; }
     .hero-title { font-size: 32px; }
-    .hypothesis-text { font-size: 18px; }
+    .hypothesis-text { font-size: 22px; padding: 20px 22px; }
+    .result-hero-number { font-size: 48px; }
     nav .nav-links a { margin-left: 16px; font-size: 14px; }
     .axis { padding: 60px 24px; }
+    .step-block { margin-bottom: 36px; }
   }
 </style>
 </head>
@@ -266,13 +383,36 @@
   </div>
 
   <div class="cta-group">
-    <a href="#axis-1" class="cta-primary">
+    <a href="#tabs" class="cta-primary">
       프로젝트 보기 <span class="arrow">↓</span>
     </a>
     <a href="mailto:yrano1127@naver.com" class="cta-secondary">yrano1127@naver.com</a>
   </div>
 </section>
 
+<!-- Tab Navigation -->
+<div id="tabs" class="tab-nav-section">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="0" onclick="switchTab(0)">
+      <span class="tab-num">01</span>
+      <span>AI 마케팅 운영체제</span>
+    </button>
+    <button class="tab-btn" data-tab="1" onclick="switchTab(1)">
+      <span class="tab-num">02</span>
+      <span>콘텐츠 — 전략·깊이</span>
+    </button>
+    <button class="tab-btn" data-tab="2" onclick="switchTab(2)">
+      <span class="tab-num">03</span>
+      <span>리드 확보 — 광고부터 LP 개편까지</span>
+    </button>
+  </div>
+</div>
+
+<!-- Tab Content -->
+<div class="tab-content">
+
+<!-- Tab Panel 0: Axis 1 -->
+<div class="tab-panel active" data-panel="0">
 <!-- Axis 1 -->
 <section id="axis-1" class="axis fade-in-up">
   <header class="axis-header">
@@ -281,7 +421,7 @@
   </header>
 
   <div class="step-block">
-    <span class="step-label">병목</span>
+    <span class="step-label bottleneck">병목</span>
     <div class="step-content" contenteditable="true">
       GA도 깨져 있었고, 운영체제도 없었다.<br>
       가설은 세웠지만 검증할 도구가 없었다.
@@ -289,14 +429,14 @@
   </div>
 
   <div class="step-block">
-    <span class="step-label">가설</span>
+    <span class="step-label hypothesis">가설</span>
     <div class="hypothesis-text gradient-text-ready" contenteditable="true">
       AI를 워크플로우로 묶으면, 1인이 팀 규모로 일한다.
     </div>
   </div>
 
   <div class="step-block">
-    <span class="step-label">어떻게</span>
+    <span class="step-label how">어떻게</span>
     <ul>
       <li contenteditable="true">측정 인프라 (GA4 + CAPI + PostHog + 채널별 유입 시트)도 함께 깔았다 → 축 2·3 진단의 토대</li>
       <li contenteditable="true">사례 1. 정·반·합 콘텐츠 파이프라인</li>
@@ -305,7 +445,7 @@
   </div>
 
   <div class="step-block">
-    <span class="step-label">결과</span>
+    <span class="step-label result">결과</span>
     <div class="result-stack">
       <div class="result-row">
         <div class="before" contenteditable="true">월 2회 발행</div>
@@ -330,37 +470,46 @@
     <h3 contenteditable="true">미니 사례 1. 정·반·합 콘텐츠 파이프라인</h3>
 
     <div class="step-block">
-      <span class="step-label">가설</span>
+      <span class="step-label hypothesis">가설</span>
       <div class="hypothesis-text gradient-text-ready" contenteditable="true">
         AI 간 정·반·합 시스템을 구축하면, 콘텐츠의 양과 질을 동시에 잡을 수 있다.
       </div>
     </div>
 
     <div class="step-block">
-      <span class="step-label">어떻게</span>
-      <ol>
-        <li>
-          <strong>수기 워크플로우 적용</strong>
-          <div class="triad">
-            <div class="triad-label">정 <span class="role">(正)</span></div>
-            <div class="triad-content" contenteditable="true">Claude — 초안 작성. 구조·논리·SEO. 긴 호흡과 일관성 강점</div>
+      <span class="step-label how">어떻게</span>
+      <div class="how-steps">
+        <div class="how-step-card">
+          <div class="how-step-num">01</div>
+          <div class="how-step-body">
+            <strong>수기 워크플로우 적용</strong>
+            <div class="triad">
+              <div class="triad-label">정 <span class="role">(正)</span></div>
+              <div class="triad-content" contenteditable="true">Claude — 초안 작성. 구조·논리·SEO. 긴 호흡과 일관성 강점</div>
+            </div>
+            <div class="triad">
+              <div class="triad-label">반 <span class="role">(反)</span></div>
+              <div class="triad-content" contenteditable="true">Gemini — 비판 검토. 한국어 톤·자연스러움·디테일 교정</div>
+            </div>
+            <div class="triad">
+              <div class="triad-label">합 <span class="role">(合)</span></div>
+              <div class="triad-content" contenteditable="true">본인 — 통합 편집. 충돌 시 사람이 결정 (구조: Claude 우선 / 톤: Gemini 우선 / 최종: 본인)</div>
+            </div>
           </div>
-          <div class="triad">
-            <div class="triad-label">반 <span class="role">(反)</span></div>
-            <div class="triad-content" contenteditable="true">Gemini — 비판 검토. 한국어 톤·자연스러움·디테일 교정</div>
-          </div>
-          <div class="triad">
-            <div class="triad-label">합 <span class="role">(合)</span></div>
-            <div class="triad-content" contenteditable="true">본인 — 통합 편집. 충돌 시 사람이 결정 (구조: Claude 우선 / 톤: Gemini 우선 / 최종: 본인)</div>
-          </div>
-        </li>
-        <li contenteditable="true"><strong>양과 질 동시 유지 검증</strong> — 월 2회 → 주 3회 페이스 + 콘텐츠 퀄리티 유지 확인</li>
-        <li contenteditable="true"><strong>검증된 워크플로우를 시스템으로 굳힘</strong> — Claude API → Gemini API → 통합 단계 자동화</li>
-      </ol>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">02</div>
+          <div class="how-step-body" contenteditable="true"><strong>양과 질 동시 유지 검증</strong> — 월 2회 → 주 3회 페이스 + 콘텐츠 퀄리티 유지 확인</div>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">03</div>
+          <div class="how-step-body" contenteditable="true"><strong>검증된 워크플로우를 시스템으로 굳힘</strong> — Claude API → Gemini API → 통합 단계 자동화</div>
+        </div>
+      </div>
     </div>
 
     <div class="step-block">
-      <span class="step-label">결과</span>
+      <span class="step-label result">결과</span>
       <ul>
         <li contenteditable="true">월 2회 → 주 3회 발행 (AI 2회 + 전환용 1회)</li>
         <li contenteditable="true">양과 질 동시 유지 (질 검증은 축 2에서)</li>
@@ -386,7 +535,7 @@
     <h3 contenteditable="true">미니 사례 2. 사내 지식 Ontology화</h3>
 
     <div class="step-block">
-      <span class="step-label">가설</span>
+      <span class="step-label hypothesis">가설</span>
       <div class="hypothesis-text gradient-text-ready" contenteditable="true">
         사내 지식을 ontology로 외재화하면, 사내 데이터가 통일되어<br>
         일관성 있고 효율적인 운영이 가능해진다.
@@ -394,18 +543,39 @@
     </div>
 
     <div class="step-block">
-      <span class="step-label">어떻게</span>
-      <ol>
-        <li contenteditable="true">Slack·Notion 353건 + Founder/팀원 인터뷰 등 raw intelligence 전수 수집</li>
-        <li contenteditable="true">/brainstorming 커맨드로 도메인별 구조 도출</li>
-        <li contenteditable="true">Ontology 11개 도메인 정의 — 회사·팀·제품·기술·시장·트랙션·투자·로드맵·고객·브랜드·경쟁사</li>
-        <li contenteditable="true">Analysis 7개 작성 — UE·해자·성장진단·SaaS전환·GTM·글로벌·투자준비</li>
-        <li contenteditable="true">17 에이전트 + 19 플러그인 + 13 마케팅 스킬에 ontology 연결</li>
-      </ol>
+      <span class="step-label how">어떻게</span>
+      <div class="how-steps">
+        <div class="how-step-card">
+          <div class="how-step-num">01</div>
+          <div class="how-step-body" contenteditable="true">Slack·Notion 353건 + Founder/팀원 인터뷰 등 raw intelligence 전수 수집</div>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">02</div>
+          <div class="how-step-body" contenteditable="true">/brainstorming 커맨드로 도메인별 구조 도출</div>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">03</div>
+          <div class="how-step-body">
+            <strong contenteditable="true">Ontology 11개 도메인 정의</strong>
+            <div class="how-step-aside" contenteditable="true">회사·팀·제품·기술·시장·트랙션·투자·로드맵·고객·브랜드·경쟁사</div>
+          </div>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">04</div>
+          <div class="how-step-body">
+            <strong contenteditable="true">Analysis 7개 작성</strong>
+            <div class="how-step-aside" contenteditable="true">UE · 해자 · 성장진단 · SaaS전환 · GTM · 글로벌 · 투자준비</div>
+          </div>
+        </div>
+        <div class="how-step-card">
+          <div class="how-step-num">05</div>
+          <div class="how-step-body" contenteditable="true">17 에이전트 + 19 플러그인 + 13 마케팅 스킬에 ontology 연결</div>
+        </div>
+      </div>
     </div>
 
     <div class="step-block">
-      <span class="step-label">결과</span>
+      <span class="step-label result">결과</span>
       <ul>
         <li contenteditable="true">사내 데이터 353건 → ontology 11 + analysis 7로 통일</li>
         <li contenteditable="true">/route, /ask 한 줄로 회사 맥락 즉시 호출, 자료 검색 시간 단축</li>
@@ -424,6 +594,10 @@
   </article>
 </section>
 
+</div><!-- /tab-panel 0 -->
+
+<!-- Tab Panel 1: Axis 2 -->
+<div class="tab-panel" data-panel="1">
 <!-- Axis 2 -->
 <section id="axis-2" class="axis fade-in-up">
   <header class="axis-header">
@@ -432,14 +606,14 @@
   </header>
 
   <div class="step-block">
-    <span class="step-label">병목</span>
+    <span class="step-label bottleneck">병목</span>
     <div class="step-content" contenteditable="true">
       콘텐츠 양산만으로는 SEO도 전환도 신뢰도 안 만들어졌다.
     </div>
   </div>
 
   <div class="step-block">
-    <span class="step-label">가설</span>
+    <span class="step-label hypothesis">가설</span>
     <div class="hypothesis-text gradient-text-ready" contenteditable="true">
       양산이 아니라 코어 콘텐츠 (BOFU, Bottom of Funnel)에 집중하면,<br>
       lead·체류 등 신뢰 시그널이 더 강해진다.
@@ -447,29 +621,57 @@
   </div>
 
   <div class="step-block">
-    <span class="step-label">어떻게</span>
-    <ol>
-      <li contenteditable="true">자체 홈페이지 SEO 방치 → Ghost CMS 구축 + SEO 기본 재정비</li>
-      <li contenteditable="true"><strong>발행 전략 분리</strong> — 일반: AI 주 2회 (검색 커버리지) / 코어: 직접 주 1회 (의사결정자 타겟)</li>
-      <li contenteditable="true"><strong>코어 콘텐츠 7편</strong> — 신뢰·브랜딩 콘텐츠 (제품 소개·케이스 스터디·CEO voice). 광고 랜딩 페이지로 활용<br>
-        <span style="color:var(--text-mute); font-size: 14px;">AX, AI 암묵지, Luffy, 인재 리스트, C-레벨, RPO, 다이렉트소싱</span>
-      </li>
-    </ol>
+    <span class="step-label how">어떻게</span>
+    <div class="how-steps">
+      <div class="how-step-card">
+        <div class="how-step-num">01</div>
+        <div class="how-step-body" contenteditable="true">자체 홈페이지 SEO 방치 → Ghost CMS 구축 + SEO 기본 재정비</div>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num">02</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">발행 전략 분리</strong>
+          <ul>
+            <li contenteditable="true">일반: AI 주 2회 (검색 커버리지)</li>
+            <li contenteditable="true">코어: 직접 주 1회 (의사결정자 타겟)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num">03</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">코어 콘텐츠 7편 — 신뢰·브랜딩 콘텐츠</strong>
+          <div class="how-step-aside" contenteditable="true">제품 소개·케이스 스터디·CEO voice. 광고 랜딩 페이지로 활용.</div>
+          <div style="margin-top:12px; padding:14px 18px; background:var(--surface2); border-radius:8px; font-size:14px; color:var(--text-sub);" contenteditable="true">
+            AX · AI 암묵지 · Luffy · 인재 리스트 · C-레벨 · RPO · 다이렉트소싱
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="step-block">
-    <span class="step-label">결과</span>
+    <span class="step-label result">결과</span>
+
+    <div class="result-hero">
+      <div class="result-hero-number">100%</div>
+      <div class="result-hero-label">
+        76편 중 인바운드 lead 발생 콘텐츠는 <strong>모두 코어</strong>.<br>
+        일반 72편 lead 0건. 가설 검증 완료.
+      </div>
+    </div>
+
     <ul>
-      <li contenteditable="true">트래픽 <strong>2.2배</strong>, 체류 <strong>1.4배</strong> (코어 119뷰·35초 vs 비코어 55뷰·25초)</li>
-      <li contenteditable="true">"AX 단일 글" 평균 체류 <strong>67초</strong> (전체 상위 3%)</li>
-      <li contenteditable="true">76편 중 인바운드 lead 발생 <span style="color:var(--accent); font-weight:600;">X건</span> 모두 코어
+      <li contenteditable="true">트래픽 <span class="metric">2.2배</span>, 체류 <span class="metric">1.4배</span> (코어 119뷰·35초 vs 비코어 55뷰·25초)</li>
+      <li contenteditable="true">"AX 단일 글" 평균 체류 <span class="metric">67초</span> (전체 상위 3%)</li>
+      <li contenteditable="true">76편 중 인바운드 lead 발생 <span class="metric-green">X건</span> 모두 코어
         <ul style="margin-top:8px;">
           <li contenteditable="true">"Luffy 소개" 단일 글 lead 2건 (becuai·GS 52g)</li>
           <li contenteditable="true">LinkedIn → 코어 경로 2건 (더모임·몬드리안AI)</li>
           <li contenteditable="true">주말 추가 2건</li>
         </ul>
       </li>
-      <li contenteditable="true"><strong>일반 72편 lead 0건</strong> → 가설 "코어가 신뢰 시그널 만든다" 검증</li>
+      <li contenteditable="true">일반 72편 lead <span class="metric-warn">0건</span> → 가설 "코어가 신뢰 시그널 만든다" 검증</li>
       <li contenteditable="true">이 시그널이 축 3 가설(LP가 게이트)의 출발점</li>
     </ul>
   </div>
@@ -499,6 +701,10 @@
   </figure>
 </section>
 
+</div><!-- /tab-panel 1 -->
+
+<!-- Tab Panel 2: Axis 3 -->
+<div class="tab-panel" data-panel="2">
 <!-- Axis 3 -->
 <section id="axis-3" class="axis fade-in-up">
   <header class="axis-header">
@@ -507,7 +713,7 @@
   </header>
 
   <div class="step-block">
-    <span class="step-label">병목</span>
+    <span class="step-label bottleneck">병목</span>
     <div class="step-content" contenteditable="true">
       광고·콘텐츠로 6개월간 약 1만+ 세션. 콜드 트래픽 전환 lead 0건,
       warm lead(이벤트·추천·지인)도 한 자릿수.
@@ -515,72 +721,92 @@
   </div>
 
   <div class="step-block">
-    <span class="step-label">가설</span>
+    <span class="step-label hypothesis">가설</span>
     <div class="hypothesis-text gradient-text-ready" contenteditable="true">
       홈 화면에 간이 문의 폼을 삽입하면, 콜드 트래픽도 lead로 전환된다.
     </div>
   </div>
 
   <div class="step-block">
-    <span class="step-label">어떻게</span>
-    <ol>
-      <li>
-        <strong contenteditable="true">광고 4채널 (LinkedIn·Meta·Google·영상) 흩뿌린 상태에서 두 시트 동시 운영</strong>
-        <ul style="margin-top:8px;">
-          <li contenteditable="true">광고 추적 시트: 채널별 비용·CPA 모니터링</li>
-          <li contenteditable="true">채널별 유입 시트: 광고 + organic + direct 통합 문의 attribution</li>
-          <li contenteditable="true">→ 두 시트 교차 검증으로 "광고·콘텐츠 채널 콜드 lead 0" 확인</li>
-        </ul>
-      </li>
-      <li>
-        <strong contenteditable="true">측정 인프라로 퍼널 진단</strong>
-        <ul style="margin-top:8px;">
-          <li contenteditable="true">채널별 유입 시트로 콜드/warm lead 분리 검증</li>
-          <li contenteditable="true">콜드 트래픽 전환 막힘 확인 → 홈 화면 실험 가설로 전환</li>
-        </ul>
-      </li>
-      <li>
-        <strong contenteditable="true">1차 홈 화면 실험 (CRO 스프린트, D+0 → D+11)</strong>
-        <div style="color:var(--text-sub); font-size:14px; margin-top:6px;" contenteditable="true">lead 발생이 시급해 개선 가능한 지점 한 번에 적용</div>
-        <ul style="margin-top:8px;">
-          <li contenteditable="true">홈 화면 간이 문의 폼 신설</li>
-          <li contenteditable="true">Hero 메시지 재정의</li>
-          <li contenteditable="true">CTA 위치·문구 변경</li>
-          <li contenteditable="true">인입 동선 재설계</li>
-        </ul>
-      </li>
-      <li>
-        <strong contenteditable="true">2차 홈 개편 — 시각·리드 마그넷 보강</strong>
-        <ul style="margin-top:8px;">
-          <li contenteditable="true">Hero: 이미지 → 리모션 영상</li>
-          <li contenteditable="true">리드 마그넷 신설 (AI 제작 가이드북 7종)</li>
-        </ul>
-        <!-- Visual placeholder for 리모션 영상 + 리드 마그넷 -->
-        <figure class="capture" style="margin-top:20px;">
-          <div class="capture-frame">
-            <div class="placeholder-tag">VISUAL · 리모션 영상</div>
-            <div>홈 Hero 영상 임베드 자리 (리모션 영상 GIF/MP4)</div>
-          </div>
-          <figcaption contenteditable="true">홈 Hero — 정적 이미지에서 리모션 영상으로 시각 강화</figcaption>
-        </figure>
-        <figure class="capture">
-          <div class="capture-frame">
-            <div class="placeholder-tag">VISUAL · 리드 마그넷</div>
-            <div>리드 마그넷 영역 미리보기 자리 (AI 제작 가이드북 7종)</div>
-          </div>
-          <figcaption contenteditable="true">홈 화면 리드 마그넷 영역 — AI 제작 가이드북 7종으로 콜드 lead 유도</figcaption>
-        </figure>
-      </li>
-    </ol>
+    <span class="step-label how">어떻게</span>
+    <div class="how-steps">
+      <div class="how-step-card">
+        <div class="how-step-num">01</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">광고 4채널 (LinkedIn·Meta·Google·영상) 흩뿌린 상태에서 두 시트 동시 운영</strong>
+          <ul>
+            <li contenteditable="true">광고 추적 시트: 채널별 비용·CPA 모니터링</li>
+            <li contenteditable="true">채널별 유입 시트: 광고 + organic + direct 통합 문의 attribution</li>
+            <li contenteditable="true">→ 두 시트 교차 검증으로 "광고·콘텐츠 채널 콜드 lead 0" 확인</li>
+          </ul>
+        </div>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num">02</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">측정 인프라로 퍼널 진단</strong>
+          <ul>
+            <li contenteditable="true">채널별 유입 시트로 콜드/warm lead 분리 검증</li>
+            <li contenteditable="true">콜드 트래픽 전환 막힘 확인 → 홈 화면 실험 가설로 전환</li>
+          </ul>
+        </div>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num">03</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">1차 홈 화면 실험 (CRO 스프린트, D+0 → D+11)</strong>
+          <div class="how-step-aside" contenteditable="true">lead 발생이 시급해 개선 가능한 지점 한 번에 적용</div>
+          <ul>
+            <li contenteditable="true">홈 화면 간이 문의 폼 신설</li>
+            <li contenteditable="true">Hero 메시지 재정의</li>
+            <li contenteditable="true">CTA 위치·문구 변경</li>
+            <li contenteditable="true">인입 동선 재설계</li>
+          </ul>
+        </div>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num">04</div>
+        <div class="how-step-body">
+          <strong contenteditable="true">2차 홈 개편 — 시각·리드 마그넷 보강</strong>
+          <ul>
+            <li contenteditable="true">Hero: 이미지 → 리모션 영상</li>
+            <li contenteditable="true">리드 마그넷 신설 (AI 제작 가이드북 7종)</li>
+          </ul>
+          <figure class="capture" style="margin-top:16px;">
+            <div class="capture-frame">
+              <div class="placeholder-tag">VISUAL · 리모션 영상</div>
+              <div>홈 Hero 영상 임베드 자리 (리모션 영상 GIF/MP4)</div>
+            </div>
+            <figcaption contenteditable="true">홈 Hero — 정적 이미지에서 리모션 영상으로 시각 강화</figcaption>
+          </figure>
+          <figure class="capture">
+            <div class="capture-frame">
+              <div class="placeholder-tag">VISUAL · 리드 마그넷</div>
+              <div>리드 마그넷 영역 미리보기 자리 (AI 제작 가이드북 7종)</div>
+            </div>
+            <figcaption contenteditable="true">홈 화면 리드 마그넷 영역 — AI 제작 가이드북 7종으로 콜드 lead 유도</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="step-block">
-    <span class="step-label">결과</span>
+    <span class="step-label result">결과</span>
+
+    <div class="result-hero">
+      <div class="result-hero-number">9건</div>
+      <div class="result-hero-label">
+        홈 개편 후 <strong>15일간</strong> 발생한<br>
+        인바운드 콜드 lead. 가설 검증 완료.
+      </div>
+    </div>
+
     <div class="step-content">
       <strong contenteditable="true">콜드 트래픽 전환 입증</strong>
       <ul style="margin-top:12px;">
-        <li contenteditable="true">1차 개편 D+11 home_generate_lead <strong>5건</strong></li>
-        <li contenteditable="true">2차 개편 후 D+15까지 <strong>9건</strong> 누적</li>
+        <li contenteditable="true">1차 개편 D+11 home_generate_lead <span class="metric">5건</span></li>
+        <li contenteditable="true">2차 개편 후 D+15까지 <span class="metric-green">9건</span> 누적</li>
         <li contenteditable="true">가설 검증: 홈 화면 폼이 콜드 lead 전환 작동</li>
       </ul>
     </div>
@@ -615,6 +841,10 @@
     </div>
   </div>
 </section>
+
+</div><!-- /tab-panel 2 -->
+
+</div><!-- /tab-content -->
 
 <!-- Tech Stack -->
 <section class="axis fade-in-up">
@@ -761,6 +991,18 @@
     showToast('다운로드 완료!');
   }
   loadContent();
+
+  // Tab switching
+  function switchTab(idx) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    // Scroll to top of tab nav for clarity
+    const tabNav = document.getElementById('tabs');
+    if (tabNav) {
+      const offset = tabNav.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }
 
   // Smooth scroll for internal anchors
   document.querySelectorAll('a[href^="#"]').forEach(a => {
