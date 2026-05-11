@@ -235,6 +235,7 @@
     <button class="cat-btn" onclick="filterCategory('content')" data-cat="content"><span contenteditable="true">Content</span></button>
     <button class="cat-btn" onclick="filterCategory('events')" data-cat="events"><span contenteditable="true">Events</span></button>
     <button class="cat-btn" onclick="filterCategory('analytics')" data-cat="analytics"><span contenteditable="true">Analytics</span></button>
+    <button class="cat-btn" onclick="filterCategory('cro')" data-cat="cro"><span contenteditable="true">CRO</span></button>
   </div>
 
   <!-- Cards Grid -->
@@ -293,6 +294,14 @@
         <div class="project-badge">Active</div>
         <div class="project-title" contenteditable="true">콘텐츠 전략 &mdash; 코어 콘텐츠</div>
         <div class="project-summary" contenteditable="true">시장 신호 기반으로 직접 기획한 전략 콘텐츠 4편 &mdash; AI 채용 존재감 구축</div>
+      </div>
+    </div>
+    <div class="project-card" onclick="switchTab(7)" data-idx="7" data-category="cro">
+      <div class="project-thumb"><div class="project-thumb-placeholder">08</div></div>
+      <div class="project-info">
+        <div class="project-badge">Active</div>
+        <div class="project-title" contenteditable="true">홈페이지 CRO 스프린트</div>
+        <div class="project-summary" contenteditable="true">5개월 lead 0 &rarr; LP 개편 후 11일 5건. 후속 가설 3개까지 설계&middot;배포</div>
       </div>
     </div>
   </div>
@@ -837,6 +846,149 @@
       <div class="tech-stack">
         <span class="tech-tag">Ghost CMS</span><span class="tech-tag">GA4</span><span class="tech-tag">Google Search Console</span>
         <span class="tech-tag">Notion</span><span class="tech-tag">Claude AI</span>
+      </div>
+    </div>
+
+    <!-- Case Study 8 -->
+    <div class="case-study" id="tab-7">
+      <h3 contenteditable="true">홈페이지 CRO 스프린트</h3>
+      <p class="case-subtitle" contenteditable="true">광고로 풀리지 않은 5개월, LP에서 풀어낸 11일 &mdash; 진단부터 후속 사이클까지</p>
+
+      <div class="par-section">
+        <div class="par-label par-p">PROBLEM</div>
+        <p contenteditable="true" style="margin-bottom:20px;">2025년 11월 15일 입사 시점, 회사는 디지털 인바운드 lead가 들어오지 않는 상태였다. 소개&middot;지인&middot;추천으로 굴러가고 있었지만, 반복 가능한 인바운드 채널이 없다는 게 진짜 문제였다.</p>
+        <p contenteditable="true" style="margin-bottom:20px;">인턴 기간을 거쳐 마케팅 본격 투입 후 <strong>1월부터 광고</strong>를 시작했다. LinkedIn 단발성으로 가설 검증 &rarr; 4월 Phase 0(Meta + Google RSA) 본격 확장 &rarr; 영상 광고까지 추가해 <strong>CTR 평균 2&sim;3%</strong> 수준까지 끌어올렸다. <strong>2월부터는 방치돼 있던 블로그를 Ghost CMS로 이관</strong>해 SEO도 병행했다.</p>
+        <p contenteditable="true" style="margin-bottom:20px;">4개월간 광고 약 490만원, SEO 3개월 병행. <strong>그래도 lead 0건이었다.</strong> 클릭은 들어오는데 폼까지 가지 않았다. 채널&middot;소재&middot;예산을 다 시도하고도 0이라는 건, 변수는 LP라는 뜻이었다. B2B 고관여 상품(선불 100만원)은 광고 클릭만으로 결정되지 않는다는 결론에 도달했다.</p>
+        <div class="metric-row">
+          <div class="metric-box"><div class="value accent">4개월</div><div class="label">광고&middot;SEO 본격 시도</div></div>
+          <div class="metric-box"><div class="value red">0건</div><div class="label">인바운드 lead</div></div>
+          <div class="metric-box"><div class="value accent">~490만원</div><div class="label">누적 광고비</div></div>
+          <div class="metric-box"><div class="value accent">2&sim;3%</div><div class="label">평균 CTR (광고 정상 작동)</div></div>
+        </div>
+        <p style="margin-top:12px;font-size:12px;color:var(--text-mute);" contenteditable="true">* 인바운드 lead = 디지털 채널 통한 문의. 소개&middot;지인&middot;추천 제외. GA4 + 자체 어드민 + COO&middot;세일즈 교차 검증.</p>
+      </div>
+
+      <div class="par-section">
+        <div class="par-label par-a">ACTION</div>
+        <div class="action-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>LP 깔때기 정밀 진단</h4>
+            <p contenteditable="true">GA4 30일 데이터 분석. 홈 LP 1.49% / 블로그 LP 1.68% &mdash; <strong>블로그가 홈보다 더 잘 잡고 있는 역전</strong>을 발견. 홈에서 폼 페이지로 넘어가는 비율은 16.7%로 블로그(33.3%)의 절반. <strong>폼 진입 단계가 가장 큰 누수</strong>로 식별.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>전략 결정 &mdash; 홈+문의 병합</h4>
+            <p contenteditable="true">폼 페이지 진입을 거치지 않고 홈 안에서 lead 수집. Hero를 버튼 2개에서 <strong>성함&middot;이메일 2필드 인라인 폼</strong>으로 교체. 일괄 개편 + before/after 30일 비교로 성공 판정 설계.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>신규 컴포넌트&middot;카피 작성 + 코드 반영</h4>
+            <p contenteditable="true">Hero/LeadMagnet/Blog 3카드/HomeInquiryForm 신규 섹션 4개를 Next.js 코드에 직접 반영. Service 본문은 타깃을 HR에서 <strong>대표</strong>로 바꿔 Pain removal 톤으로 재작성. 블로그 카드 3개는 실측 lead&middot;체류 기반으로 재선정.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>측정 설계 &mdash; GA4 이벤트 22종 + 노션 텍소노미 갭 분석</h4>
+            <p contenteditable="true">신규 7종(Hero폼 3 + LeadMagnet 2 + Blog 2) + 기존 재사용. before/after 비교 깔때기, KPI 매핑, 배포 체크리스트, 노션 전사 텍소노미와의 갭 A&sim;D(추가 11종 / 삭제 4종 / 미구현 결정 / 명명 통일)까지 정리.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="par-section">
+        <div class="par-label par-r">RESULT (D+11)</div>
+        <div class="metric-row">
+          <div class="metric-box"><div class="value green">5건</div><div class="label">11일 누적 lead</div></div>
+          <div class="metric-box"><div class="value accent">4건</div><div class="label">홈 LP 직접</div></div>
+          <div class="metric-box"><div class="value accent">1건</div><div class="label">/request 페이지</div></div>
+          <div class="metric-box"><div class="value accent">5개월</div><div class="label">0 &rarr; 5</div></div>
+        </div>
+
+        <div style="font-size:13px;font-weight:600;margin:28px 0 12px;color:var(--text-mute);letter-spacing:1.5px;">5건 채널 분포</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;line-height:2;">
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;font-weight:600;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;">
+            <span>채널</span><span style="text-align:right;">위치</span><span style="text-align:right;">건수</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>Direct</span><span style="text-align:right;">홈</span><span style="text-align:right;font-weight:700;">2</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>Google Ads (cpc)</span><span style="text-align:right;">홈</span><span style="text-align:right;font-weight:700;">1</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>Google Organic</span><span style="text-align:right;">홈</span><span style="text-align:right;font-weight:700;">1</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:8px;">
+            <span>LinkedIn Organic (게시물)</span><span style="text-align:right;">/request</span><span style="text-align:right;font-weight:700;">1</span>
+          </div>
+          <p style="margin-top:12px;color:var(--text-sub);font-size:13px;" contenteditable="true">&rarr; 광고&middot;오가닉&middot;직접 모두에서 lead 발생. 5건 모두 LP에서 결정됨 &mdash; "LP가 변수"라는 가설 검증.</p>
+        </div>
+
+        <div style="font-size:13px;font-weight:600;margin:28px 0 12px;color:var(--text-mute);letter-spacing:1.5px;">D+30 성공 판정 KPI</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;font-size:14px;line-height:2;">
+          <div style="display:grid;grid-template-columns:1.5fr 80px 80px;gap:8px;font-weight:600;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;">
+            <span>지표</span><span style="text-align:right;">현재</span><span style="text-align:right;">목표</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 80px 80px;gap:8px;">
+            <span>Hero 폼 진입율</span><span style="text-align:right;">1.3%</span><span style="text-align:right;font-weight:700;color:var(--green);">3.0%+</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 80px 80px;gap:8px;">
+            <span>홈 &rarr; 폼 진입율</span><span style="text-align:right;">1.49%</span><span style="text-align:right;font-weight:700;color:var(--green);">3.5%+</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 80px 80px;gap:8px;">
+            <span>월 홈 LP lead</span><span style="text-align:right;">3건</span><span style="text-align:right;font-weight:700;color:var(--green);">8건+</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 80px 80px;gap:8px;">
+            <span>월 리포트 이메일 lead</span><span style="text-align:right;">0건</span><span style="text-align:right;font-weight:700;color:var(--green);">10건+</span>
+          </div>
+          <p style="margin-top:12px;color:var(--text-sub);font-size:13px;" contenteditable="true">&rarr; 30일 풀 측정은 D+30 시점 회사 내부 데이터로 검증 예정.</p>
+        </div>
+      </div>
+
+      <div class="par-section">
+        <div class="par-label" style="background:#3b82f6;">NEXT CYCLE</div>
+        <p contenteditable="true" style="margin-bottom:20px;">D+11 5건은 가설(LP가 변수)이 맞았다는 신호이지 끝이 아니었다. 표본을 키우기 위한 후속 가설 3개를 설계했다.</p>
+        <div class="action-step">
+          <div class="step-num" style="background:var(--green);">&#10003;</div>
+          <div class="step-content">
+            <h4>Hero 이미지 &rarr; Remotion 영상화 <span style="font-size:12px;color:var(--green);font-weight:600;">(배포 예정)</span></h4>
+            <p contenteditable="true">정적 이미지로는 B2B 고관여 상품의 작동 방식을 설명하기 부족하다는 가설. 코드 기반 영상(Remotion)으로 제품 데모를 시각화.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <div class="step-num" style="background:var(--green);">&#10003;</div>
+          <div class="step-content">
+            <h4>LeadMagnet 섹션 상단 이동 <span style="font-size:12px;color:var(--green);font-weight:600;">(배포 예정)</span></h4>
+            <p contenteditable="true">가이드북 다운로드(약한 전환)가 폼 제출(강한 전환)보다 진입 장벽이 낮으므로, 더 위에 배치해 약&rarr;강 전환 깔때기 재설계.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <div class="step-num" style="background:#999;">&#10005;</div>
+          <div class="step-content">
+            <h4>Fake door 테스트 <span style="font-size:12px;color:var(--text-mute);font-weight:600;">(폐기)</span></h4>
+            <p contenteditable="true">미출시 기능에 대한 수요 검증용으로 검토했으나, 사용자 기만 이슈로 폐기. 가설 검증 가치보다 고객 신뢰 손상 비용이 크다고 판단.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="par-section">
+        <div class="par-label" style="background:#0a0a0a;">LEARNINGS</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px;font-size:14px;color:var(--text-sub);line-height:1.8;">
+          &bull; <strong>채널&middot;소재가 아니라 LP가 문제일 때가 있다</strong> &mdash; 4개월 채널 시도 끝에 도달한 진단<br>
+          &bull; <strong>B2B 고관여 상품은 광고 클릭으로 lead가 만들어지지 않는다</strong> &mdash; 광고는 인지 트리거, 결정은 LP에서<br>
+          &bull; <strong>측정 설계까지가 한 사이클의 deliverable</strong> &mdash; 가설 방향이 맞았는지 양방향 모두 학습 나오게 설계
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text-mute);letter-spacing:1.5px;">사용 도구</div>
+      <div class="tech-stack">
+        <span class="tech-tag">GA4</span><span class="tech-tag">Meta Pixel</span><span class="tech-tag">Meta CAPI</span><span class="tech-tag">PostHog</span>
+        <span class="tech-tag">Next.js</span><span class="tech-tag">Remotion</span><span class="tech-tag">Notion</span><span class="tech-tag">Claude AI</span><span class="tech-tag">피트페이퍼</span>
       </div>
     </div>
   </div>
