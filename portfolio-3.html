@@ -664,10 +664,11 @@
     <ul>
       <li contenteditable="true">트래픽 <span class="metric">2.2배</span>, 체류 <span class="metric">1.4배</span> (코어 119뷰·35초 vs 비코어 55뷰·25초)</li>
       <li contenteditable="true">"AX 단일 글" 평균 체류 <span class="metric">67초</span> (전체 상위 3%)</li>
-      <li contenteditable="true">76편 중 인바운드 lead 발생 <span class="metric-green">X건</span> 모두 코어
+      <li contenteditable="true">76편 중 인바운드 lead 발생 <span class="metric-green">8건</span> 모두 코어
         <ul style="margin-top:8px;">
           <li contenteditable="true">"Luffy 소개" 단일 글 lead 2건 (becuai·GS 52g)</li>
           <li contenteditable="true">LinkedIn → 코어 경로 2건 (더모임·몬드리안AI)</li>
+          <li contenteditable="true">네이버 블로그 유입 2건</li>
           <li contenteditable="true">주말 추가 2건</li>
         </ul>
       </li>
@@ -773,11 +774,10 @@
             <li contenteditable="true">리드 마그넷 신설 (AI 제작 가이드북 7종)</li>
           </ul>
           <figure class="capture" style="margin-top:16px;">
-            <div class="capture-frame">
-              <div class="placeholder-tag">VISUAL · 리모션 영상</div>
-              <div>홈 Hero 영상 임베드 자리 (리모션 영상 GIF/MP4)</div>
-            </div>
-            <figcaption contenteditable="true">홈 Hero — 정적 이미지에서 리모션 영상으로 시각 강화</figcaption>
+            <video class="hero-motion-video" autoplay muted loop playsinline controls preload="auto" poster="images/hero-motion-poster.png" style="width:100%; border-radius:10px; display:block; background:#000;">
+              <source src="images/hero-motion.mp4" type="video/mp4">
+            </video>
+            <figcaption contenteditable="true">홈 Hero — 정적 이미지에서 리모션 영상으로 시각 강화 (2026-05-06 도입)</figcaption>
           </figure>
           <figure class="capture">
             <div class="capture-frame">
@@ -1011,6 +1011,15 @@
       const target = document.querySelector(a.getAttribute('href'));
       if (target) target.scrollIntoView({behavior: 'smooth'});
     });
+  });
+
+  // Force-play autoplay videos (workaround for some browsers blocking muted autoplay)
+  document.querySelectorAll('video[autoplay]').forEach(v => {
+    v.muted = true;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener('canplay', tryPlay, { once: true });
+    v.addEventListener('loadeddata', tryPlay, { once: true });
   });
 </script>
 
